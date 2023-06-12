@@ -3,6 +3,9 @@ import styles from "./Editor.module.css";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Prism from "prismjs";
+import { AiFillHtml5 } from "react-icons/ai";
+import { FaCss3Alt } from "react-icons/fa";
+import { SiJavascript } from "react-icons/si";
 
 export default function Editor() {
   const [code, setCode] = useState<string>(`<!DOCTYPE html>
@@ -44,31 +47,22 @@ export default function Editor() {
   const [jsCode, setJsCode] = useState<string>("");
 
   const handleKeyDown = (e: any) => {
-    let value = "xml",
-      selStartPos = e.currentTarget.selectionStart;
-
-    // handle 4-space indent on
-    if (e.key === "Tab") {
-      value =
-        value.substring(0, selStartPos) +
-        "    " +
-        value.substring(selStartPos, value.length);
-      e.currentTarget.selectionStart = selStartPos + 3;
-      e.currentTarget.selectionEnd = selStartPos + 4;
-      e.preventDefault();
-
-      setCode(value);
-    }
+    // let value = "xml",
+    //   selStartPos = e.currentTarget.selectionStart;
+    // // handle 4-space indent on
+    // if (e.key === "Tab") {
+    //   value =
+    //     value.substring(0, selStartPos) +
+    //     "    " +
+    //     value.substring(selStartPos, value.length);
+    //   e.currentTarget.selectionStart = selStartPos + 3;
+    //   e.currentTarget.selectionEnd = selStartPos + 4;
+    //   e.preventDefault();
+    //   setCode(value);
+    // }
   };
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  }, [code]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     Prism.highlightAll();
@@ -98,13 +92,34 @@ export default function Editor() {
         <Sidebar />
 
         <div className={styles.codeblock}>
-          <div className={styles.nav}></div>
+          <div className={styles.nav}>
+            <div className={styles.navItem}>
+              <AiFillHtml5 />
+              <span className={styles.navItemText}>index.html</span>
+              <span></span>
+            </div>
+            <div className={styles.navItem}>
+              <FaCss3Alt />
+              <span className={styles.navItemText}>style.css</span>
+            </div>
+            <div className={styles.navItem}>
+              <SiJavascript />
+              <span className={styles.navItemText}>script.js</span>
+            </div>
+          </div>
 
           <div className="code-edit-container">
             <textarea
               className="code-input"
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onChange={(e) => {
+                setCode(e.target.value);
+                setLoading(true);
+
+                setTimeout(() => {
+                  setLoading(false);
+                }, 1500);
+              }}
               onKeyDown={handleKeyDown}
             ></textarea>
             <pre className="code-output">
