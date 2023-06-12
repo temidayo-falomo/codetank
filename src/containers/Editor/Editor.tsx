@@ -85,7 +85,7 @@ export default function Editor() {
 
   useEffect(() => {
     Prism.highlightAll();
-  }, [code]);
+  }, [code, language]);
 
   return (
     <>
