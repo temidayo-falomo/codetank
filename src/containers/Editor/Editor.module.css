@@ -22,8 +22,18 @@
   padding: 0 1.5rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  color: #fff;
   border-right: 1px solid rgba(255, 255, 255, 0.15);
+  color: gray;
+}
+
+.navItem:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.navItem.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-bottom: 2px palegreen solid;
 }
 
 .codeblock {

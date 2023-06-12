@@ -13,7 +13,7 @@
 
 .filename {
   padding: 10px 5px;
-  background-color: red;
+  background-color: rgb(66, 220, 66);
 }
 
 .col {
@@ -26,8 +26,13 @@
   padding: 5px 10px;
   /* border: 1px #3c3c4a solid; */
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .col span:hover {
+  background-color: #3c3c4a;
+}
+
+.col span.active {
   background-color: #3c3c4a;
 }

@@ -1,68 +1,83 @@
 import Sidebar from "@/components/sidebar/Sidebar";
 import styles from "./Editor.module.css";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Prism from "prismjs";
 import { AiFillHtml5 } from "react-icons/ai";
 import { FaCss3Alt } from "react-icons/fa";
 import { SiJavascript } from "react-icons/si";
+import { CgClose } from "react-icons/cg";
 
 export default function Editor() {
-  const [code, setCode] = useState<string>(`<!DOCTYPE html>
-<html>
+  const [language, setLanguage] = useState<string>("xml"); // ["xml", "css", "js"
 
-  <head>
-  <title>My First Website</title>
-  <link
-  href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700,500,600,300&display=swap"
-  rel="stylesheet"
-></link>
-  
-  </head>
-
-  <body>
-  <h1>Hello World</h1>
-  <p>Lorem ipsum dolor sit amet,
-  consectetur adipiscing elit,
-   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  </body>
+  const [htmlCode, setHtmlCode] = useState<string>(
+`<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Code Tank</title>
+      <link rel="stylesheet" href="style.css" />
+      <link
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700,500,600,300&display=swap"
+      rel="stylesheet"></link>
+    </head>
+    <body>
+      <h1>Hello World</h1>
+      <script src="script.js"></script>
+    </body>
   </html>
-
-
-  <script>
-    // alert("Hello World");
-  </script>
-
-  <style>
-    body {
-
-      color: #000;
-      font-family: "Clash Display", sans-serif;
-    }
-    </style>
   `);
 
-  const [htmlCode, setHtmlCode] = useState<string>("");
-  const [cssCode, setCssCode] = useState<string>("");
-  const [jsCode, setJsCode] = useState<string>("");
+  const [cssCode, setCssCode] = useState<string>(
+`* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
 
-  const handleKeyDown = (e: any) => {
-    // let value = "xml",
-    //   selStartPos = e.currentTarget.selectionStart;
-    // // handle 4-space indent on
-    // if (e.key === "Tab") {
-    //   value =
-    //     value.substring(0, selStartPos) +
-    //     "    " +
-    //     value.substring(selStartPos, value.length);
-    //   e.currentTarget.selectionStart = selStartPos + 3;
-    //   e.currentTarget.selectionEnd = selStartPos + 4;
-    //   e.preventDefault();
-    //   setCode(value);
-    // }
-  };
+  body {
+    background-color: #fff;
+    color: #000;
+    font-family: "Clash Display";
+  }
+
+  h1 {
+    font-family: "Clash Display";
+  }
+  `);
+
+  const [jsCode, setJsCode] = useState<string>(
+    `console.log("Hello World");
+  `);
+
+  const [code, setCode] = useState<string>(
+    htmlCode +
+      "<style>" +
+      cssCode +
+      "</style>" +
+      "<scri" +
+      "pt>" +
+      jsCode +
+      "</scri" +
+      "pt>"
+  );
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setCode(
+      htmlCode +
+        "<style>" +
+        cssCode +
+        "</style>" +
+        "<scri" +
+        "pt>" +
+        jsCode +
+        "</scri" +
+        "pt>"
+    );
+  }, [htmlCode, cssCode, jsCode]);
 
   useEffect(() => {
     Prism.highlightAll();
@@ -89,20 +104,43 @@ export default function Editor() {
       </Head>
 
       <div className={styles.editor}>
-        <Sidebar />
+        <Sidebar language={language} setLanguage={setLanguage} />
 
         <div className={styles.codeblock}>
           <div className={styles.nav}>
-            <div className={styles.navItem}>
+            <div
+              onClick={() => {
+                setLanguage("xml");
+              }}
+              className={`${styles.navItem} ${
+                language === "xml" ? styles.active : ""
+              }`}
+            >
               <AiFillHtml5 />
               <span className={styles.navItemText}>index.html</span>
-              <span></span>
+              {/* {<CgClose />} */}
             </div>
-            <div className={styles.navItem}>
+
+            <div
+              onClick={() => {
+                setLanguage("css");
+              }}
+              className={`${styles.navItem} ${
+                language === "css" ? styles.active : ""
+              }`}
+            >
               <FaCss3Alt />
               <span className={styles.navItemText}>style.css</span>
             </div>
-            <div className={styles.navItem}>
+
+            <div
+              onClick={() => {
+                setLanguage("javascript");
+              }}
+              className={`${styles.navItem} ${
+                language === "javascript" ? styles.active : ""
+              }`}
+            >
               <SiJavascript />
               <span className={styles.navItemText}>script.js</span>
             </div>
@@ -111,25 +149,40 @@ export default function Editor() {
           <div className="code-edit-container">
             <textarea
               className="code-input"
-              value={code}
+              value={
+                language === "xml"
+                  ? htmlCode
+                  : language === "css"
+                  ? cssCode
+                  : jsCode
+              }
               onChange={(e) => {
-                setCode(e.target.value);
+                if (language === "xml") {
+                  setHtmlCode(e.target.value);
+                } else if (language === "css") {
+                  setCssCode(e.target.value);
+                } else if (language === "javascript") {
+                  setJsCode(e.target.value);
+                }
                 setLoading(true);
 
                 setTimeout(() => {
                   setLoading(false);
                 }, 1500);
               }}
-              onKeyDown={handleKeyDown}
             ></textarea>
             <pre className="code-output">
               <code
-                className={`language-xml`}
+                className={`language-${language}`}
                 style={{
                   whiteSpace: "pre-wrap",
                 }}
               >
-                {code}
+                {language === "xml"
+                  ? htmlCode
+                  : language === "css"
+                  ? cssCode
+                  : jsCode}
               </code>
             </pre>
           </div>
