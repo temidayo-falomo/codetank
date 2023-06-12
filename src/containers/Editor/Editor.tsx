@@ -2,11 +2,11 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import styles from "./Editor.module.css";
 import Head from "next/head";
 import { use, useEffect, useState } from "react";
-import Prism from "prismjs";
 import { AiFillHtml5 } from "react-icons/ai";
 import { FaCss3Alt } from "react-icons/fa";
 import { SiJavascript } from "react-icons/si";
 import { CgClose } from "react-icons/cg";
+import Prism from "prismjs";
 
 export default function Editor() {
   const [language, setLanguage] = useState<string>("xml"); // ["xml", "css", "js"
