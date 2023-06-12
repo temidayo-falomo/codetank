@@ -15,6 +15,7 @@
     "@types/react-dom": "18.2.4",
     "@types/react-syntax-highlighter": "^15.5.7",
     "babel-plugin-prismjs": "^2.1.0",
+    "caret-pos": "^2.0.0",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "next": "13.4.4",
@@ -24,6 +25,10 @@
     "react-highlight": "^0.15.0",
     "react-icons": "^4.9.0",
     "react-syntax-highlighter": "^15.5.0",
+    "textarea-caret": "^3.1.0",
     "typescript": "5.1.3"
+  },
+  "devDependencies": {
+    "@types/textarea-caret": "^3.0.1"
   }
 }

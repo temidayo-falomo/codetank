@@ -1,18 +1,17 @@
 import Sidebar from "@/components/sidebar/Sidebar";
 import styles from "./Editor.module.css";
 import Head from "next/head";
-import { use, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiFillHtml5 } from "react-icons/ai";
 import { FaCss3Alt } from "react-icons/fa";
 import { SiJavascript } from "react-icons/si";
-import { CgClose } from "react-icons/cg";
 import Prism from "prismjs";
+import { MdKeyboardArrowUp } from "react-icons/md";
 
 export default function Editor() {
   const [language, setLanguage] = useState<string>("xml"); // ["xml", "css", "js"
-
   const [htmlCode, setHtmlCode] = useState<string>(
-`<!DOCTYPE html>
+    `<!DOCTYPE html>
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
@@ -27,10 +26,10 @@ export default function Editor() {
       <script src="script.js"></script>
     </body>
   </html>
-  `);
-
+  `
+  );
   const [cssCode, setCssCode] = useState<string>(
-`* {
+    `* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -40,17 +39,18 @@ export default function Editor() {
     background-color: #fff;
     color: #000;
     font-family: "Clash Display";
+    padding: 1rem;
   }
 
   h1 {
-    font-family: "Clash Display";
+    font-size: 3rem;
   }
-  `);
-
+  `
+  );
   const [jsCode, setJsCode] = useState<string>(
     `console.log("Hello World");
-  `);
-
+  `
+  );
   const [code, setCode] = useState<string>(
     htmlCode +
       "<style>" +
@@ -64,6 +64,19 @@ export default function Editor() {
   );
 
   const [loading, setLoading] = useState(false);
+
+  const [boxPosition, setBoxPosition] = useState<any>(5);
+  const [pushNumber, setPushNumber] = useState(0);
+
+  const inputRef = useRef<any>(null);
+  const caretPositionRef = useRef<number>(0); // Ref to store the caret position
+  const divRef = useRef<HTMLDivElement>(null); // Ref for the div element
+
+  const handleKeyUp = () => {
+    const caretPosition = inputRef.current?.selectionStart || 0;
+    caretPositionRef.current = caretPosition; // Update the caret position ref
+    setBoxPosition(caretPosition);
+  };
 
   useEffect(() => {
     setCode(
@@ -93,14 +106,6 @@ export default function Editor() {
         <title>Editor</title>
         <meta name="description" content="Code Tank" />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700,500,600,300&display=swap"
-          rel="stylesheet"
-        ></link>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atelier-cave-dark.min.css"
-        ></link>
       </Head>
 
       <div className={styles.editor}>
@@ -148,6 +153,8 @@ export default function Editor() {
 
           <div className="code-edit-container">
             <textarea
+              onKeyDown={handleKeyUp}
+              ref={inputRef}
               className="code-input"
               value={
                 language === "xml"
@@ -185,6 +192,39 @@ export default function Editor() {
                   : jsCode}
               </code>
             </pre>
+
+            <div
+              ref={divRef}
+              className="caret-div"
+              style={{
+                top: boxPosition - pushNumber,
+              }}
+            >
+              <MdKeyboardArrowUp
+                className="close"
+                style={{
+                  fontSize: "1.5rem",
+                  cursor: "pointer",
+                }}
+                onClick={() => setPushNumber(pushNumber + 50)}
+              />
+
+              <div className="select">
+                <span>div</span>
+              </div>
+
+              <div className="select">
+                <span>br</span>
+              </div>
+
+              <div className="select">
+                <span>span</span>
+              </div>
+
+              <div className="select">
+                <span>code</span>
+              </div>
+            </div>
           </div>
         </div>
 
