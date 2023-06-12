@@ -1,9 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -79,6 +81,16 @@
   margin: 0;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
 html,
 body {
   max-width: 100vw;
@@ -99,6 +111,269 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* PrismJS 1.29.0
+https://prismjs.com/download.html#themes=prism-twilight&languages=markup+css+clike+javascript+jsx */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #fff;
+  background: 0 0;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 1em;
+  text-align: left;
+  text-shadow: 0 -0.1em 0.2em #000;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #141414;
+}
+pre[class*="language-"] {
+  border-radius: 0.5em;
+  box-shadow: 1px 1px 0.5em #000 inset;
+  margin: 0.5em 0;
+  overflow: auto;
+  padding: 1em;
+}
+pre[class*="language-"]::-moz-selection {
+  background: #27292a;
+}
+pre[class*="language-"]::selection {
+  background: #27292a;
+}
+code[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection,
+pre[class*="language-"]::-moz-selection {
+  text-shadow: none;
+  background: hsla(0, 0%, 93%, 0.15);
+}
+code[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+pre[class*="language-"]::selection {
+  text-shadow: none;
+  background: hsla(0, 0%, 93%, 0.15);
+}
+:not(pre) > code[class*="language-"] {
+  border-radius: 0.3em;
+  box-shadow: 1px 1px 0.3em -0.1em #000 inset;
+  padding: 0.15em 0.2em 0.05em;
+  white-space: normal;
+}
+.token.cdata,
+.token.comment,
+.token.doctype,
+.token.prolog {
+  color: #777;
+}
+.token.punctuation {
+  opacity: 0.7;
+}
+.token.namespace {
+  opacity: 0.7;
+}
+.token.boolean,
+.token.deleted,
+.token.number,
+.token.tag {
+  color: #ce6849;
+}
+.token.builtin,
+.token.constant,
+.token.keyword,
+.token.property,
+.token.selector,
+.token.symbol {
+  color: #f9ed99;
+}
+.language-css .token.string,
+.style .token.string,
+.token.attr-name,
+.token.attr-value,
+.token.char,
+.token.entity,
+.token.inserted,
+.token.operator,
+.token.string,
+.token.url,
+.token.variable {
+  color: #909e6a;
+}
+.token.atrule {
+  color: #7385a5;
+}
+.token.important,
+.token.regex {
+  color: #e8c062;
+}
+.token.bold,
+.token.important {
+  font-weight: 700;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.entity {
+  cursor: help;
+}
+.language-markup .token.attr-name,
+.language-markup .token.punctuation,
+.language-markup .token.tag {
+  color: #ac885c;
+}
+.token {
+  position: relative;
+  z-index: 1;
+}
+.line-highlight.line-highlight {
+  background: hsla(0, 0%, 33%, 0.25);
+  background: linear-gradient(
+    to right,
+    hsla(0, 0%, 33%, 0.1) 70%,
+    hsla(0, 0%, 33%, 0)
+  );
+  border-bottom: 1px dashed #545454;
+  border-top: 1px dashed #545454;
+  margin-top: 0.75em;
+  z-index: 0;
+}
+.line-highlight.line-highlight:before,
+.line-highlight.line-highlight[data-end]:after {
+  background-color: #8693a6;
+  color: #f4f1ef;
+}
+
+/** Code editor >> */
+.code-edit-container {
+  position: relative;
+  min-height: 1000%;
+}
+
+.code-input,
+.code-output {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border: none;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 0.8rem;
+  background: transparent;
+  white-space: pre-wrap;
+  line-height: 1.5em;
+  word-wrap: break-word;
+  font-size: 1rem;
+}
+
+.code-input {
+  opacity: 1;
+  margin: 0;
+  color: hsl(0, 0%, 40%);
+  resize: none;
+  background-color: black;
+}
+
+.code-output {
+  pointer-events: none;
+  z-index: 3;
+  margin: 0;
+  overflow-y: auto;
+}
+
+code {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 1rem;
+  display: block;
+  color: hsl(0, 0%, 40%);
+  font-size: 0.8rem;
+  font-family: "PT Mono", monospace;
+}
+
+/* overrides */
+.code-edit-container :not(pre) > code[class*="language-"],
+.code-edit-container pre[class*="language-"] {
+  background: transparent;
+  margin: 0;
+}
+
+textarea {
+  resize: none;
+  outline: none;
+  font-size: 0.8rem;
+  background: transparent;
+  white-space: pre-wrap;
+  line-height: 1.5em;
+  word-wrap: break-word;
+  font-size: 1rem;
+  overflow: hidden !important;
+}
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid #000;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
+}
+
+
+
 
 @media (prefers-color-scheme: dark) {
   html {
