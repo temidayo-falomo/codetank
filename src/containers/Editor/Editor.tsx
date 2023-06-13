@@ -6,7 +6,8 @@ import { AiFillHtml5 } from "react-icons/ai";
 import { FaCss3Alt } from "react-icons/fa";
 import { SiJavascript } from "react-icons/si";
 import Prism from "prismjs";
-import { MdKeyboardArrowUp } from "react-icons/md";
+import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { relative } from "path";
 
 export default function Editor() {
   const [language, setLanguage] = useState<string>("xml"); // ["xml", "css", "js"
@@ -51,6 +52,7 @@ export default function Editor() {
     `console.log("Hello World");
   `
   );
+
   const [code, setCode] = useState<string>(
     htmlCode +
       "<style>" +
@@ -68,6 +70,8 @@ export default function Editor() {
   const [boxPosition, setBoxPosition] = useState<any>(5);
   const [pushNumber, setPushNumber] = useState(0);
 
+  const [linesOfCode, setLinesOfCode] = useState(0);
+
   const inputRef = useRef<any>(null);
   const caretPositionRef = useRef<number>(0); // Ref to store the caret position
   const divRef = useRef<HTMLDivElement>(null); // Ref for the div element
@@ -77,6 +81,43 @@ export default function Editor() {
     caretPositionRef.current = caretPosition; // Update the caret position ref
     setBoxPosition(caretPosition);
   };
+
+  // useEffect(() => {
+  //   const handleClick = (event: MouseEvent) => {
+  //     const textarea = document.getElementById(
+  //       "ta"
+  //     ) as HTMLTextAreaElement | null;
+  //     if (textarea) {
+  //       const selectionStart = textarea.selectionStart || 0;
+  //       const lines = textarea.value
+  //         .substr(0, selectionStart)
+  //         .split(/\r?\n|\r/);
+  //       const lineNo = lines.length;
+  //       const lineText = lines[lineNo - 1];
+  //       const numOfSpaces = lineText.split(/\s/).length - 1;
+  //       console.log(lineNo, lineText, numOfSpaces);
+  //     }
+  //   };
+
+  //   window.onload = function () {
+  //     const textarea = document.getElementById("ta");
+  //     textarea?.addEventListener("click", handleClick);
+  //   };
+  // }, [code]);
+
+  useEffect(() => {
+    const textarea = document.getElementById(
+      "ta"
+    ) as HTMLTextAreaElement | null;
+    if (textarea) {
+      const lines = textarea.value.split(/\r?\n|\r/);
+      const lineNo = lines.length;
+      const lineText = lines[lineNo - 1];
+      const numOfSpaces = lineText.split(/\s/).length - 1;
+      // console.log(lineNo, lineText, numOfSpaces);
+      setLinesOfCode(lineNo);
+    }
+  }, [code, language]);
 
   useEffect(() => {
     setCode(
@@ -153,6 +194,7 @@ export default function Editor() {
 
           <div className="code-edit-container">
             <textarea
+              id="ta"
               onKeyDown={handleKeyUp}
               ref={inputRef}
               className="code-input"
@@ -178,6 +220,13 @@ export default function Editor() {
                 }, 1500);
               }}
             ></textarea>
+
+            <div className="lines-of-code">
+              {[...Array(linesOfCode + 1)].map((val, index) => {
+                return <span key={index}>{index + 1}</span>;
+              })}
+            </div>
+
             <pre className="code-output">
               <code
                 className={`language-${language}`}
@@ -224,6 +273,16 @@ export default function Editor() {
               <div className="select">
                 <span>code</span>
               </div>
+
+              <MdOutlineKeyboardArrowDown
+                className="close"
+                style={{
+                  fontSize: "1.5rem",
+                  cursor: "pointer",
+                  alignSelf: "flex-start",
+                }}
+                onClick={() => setPushNumber(pushNumber - 50)}
+              />
             </div>
           </div>
         </div>

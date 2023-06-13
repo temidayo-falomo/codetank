@@ -259,14 +259,18 @@ pre[class*="language-"]::selection {
 .code-edit-container {
   position: relative;
   min-height: 1000%;
+  width: 100%;
+  display: grid !important;
+  grid-template-columns: 25px auto !important;
 }
 
 .code-input,
 .code-output {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: 25px;
+  right: 0;
+  width: 90%;
   height: 100%;
   padding: 1rem;
   border: none;
@@ -402,22 +406,28 @@ textarea {
   text-align: right;
   align-self: flex-end;
   padding: 2px;
-  border: 2px  rgba(255, 255, 255, 0.3) solid;
+  border: 2px rgba(255, 255, 255, 0.3) solid;
   border-radius: 50%;
 }
 
-/* .token.token.property::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 300px;
-  height: 100px;
-  background-color: royalblue;
-  z-index: 999;
-} */
+.lines-of-code {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5em;
+  font-size: 1em;
+  padding-top: 1rem;
+  color: rgba(255, 255, 255, 0.3);
+  /* border-right: 2px solid #24272e; */
+  overflow: hidden;
+  background-color: rgba(74, 72, 72, 0.091);
+}
+
+.lines-of-code span {
+  color: rgba(255, 255, 255, 0.3);
+  /* border-bottom: 2px solid #24272e; */
+  /* opacity: 0.5; */
+}
 
 @media (prefers-color-scheme: dark) {
   html {

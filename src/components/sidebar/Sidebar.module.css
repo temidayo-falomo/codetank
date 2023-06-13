@@ -1,6 +1,6 @@
 .aside {
   width: auto;
-  border-right: 2px #24272E solid;
+  /* border-right: 2px #24272E solid; */
   height: 100%;
   display: flex;
   flex-direction: column;
